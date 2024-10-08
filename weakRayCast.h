@@ -5,11 +5,14 @@
 #include <string>
 #include <memory>
 #include "geometric.h"
+#include <cmath>
 // #include <SDL.h>
 using namespace std;
+constexpr double PI = 3.14159265358979323846;
 
 class WeakRayCast {
     public:
+        double ID;
         int window_height = 100;
         int window_width = 100;
         vector<Point> data_point = {};
@@ -18,8 +21,15 @@ class WeakRayCast {
         string background_color;
         string point_color;
         bool cast_initilalized = false;
+        Point camera_pov,screen_center;
+        float z_rotation,xy_rotation,focal_length;
+
+        WeakRayCast(double ID) : camera_pov(0, 0, 0), screen_center(0, 0, 2) {ini
+            this->ID = ID;
+        }
+
         // initialzing Setup all the holder and specify the type of data allocation 
-        void _init_(bool typeStates = true, int Epoc, string background_color = "black", string point_color = "white"){
+        void _init_(bool typeStates = true, int Epoc, string background_color = "black", string point_color = "white", Point camera, float focal_length=0, float xy_rotation=PI/4, float z_rotation=PI/2){
             if(typeStates == true){
                 this->data_point = {};
                 this->isStatic = true;
@@ -32,7 +42,13 @@ class WeakRayCast {
             this->background_color = background_color;
             this->point_color = point_color;
             this->cast_initilalized = true;
-
+            this->camera_pov = camera;
+            this->focal_length = abs(focal_length);
+            this->xy_rotation = fmod(xy_rotation, 2 * PI);
+            if (this->xy_rotation < 0) this->xy_rotation += 2 * PI;
+            this->z_rotation = fmod(z_rotation, PI);
+            if (this->z_rotation < 0) this->z_rotation += PI;
+            this->screen_center = SphericalPoint(this->z_rotation + this->camera_pov.x,this->xy_rotation + this->camera_pov.y,this->focal_length + this->camera_pov.z);
         }
 
         // creating a new windows with the setup for the weak raycasting
