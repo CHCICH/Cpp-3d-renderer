@@ -75,7 +75,7 @@ class WeakRayCast {
     void add_data_point(vector <Point> newDataSet){
         if(isStatic){
             for(int i = 0 ; i < newDataSet.size(); i++){
-                this->data_point.push_back(newDataSet[i]);
+                this->data_point.push_back(newDataSet[i]); // Use a reference to avoid copying each Point
             }
         }else{
             cerr << "you cannot add a point to a dynamic based rendering" << endl;
@@ -83,11 +83,10 @@ class WeakRayCast {
     }
 
     // after initialazation we need to start computing things
-    void Render(vector<Point> data_set){
-
+    void Render(vector<Point> &data_set){ 
         // Point 3d_projection_point = this->intersection_Plane_Line();
     }
 
 };
 
-#endif // WEAKRAYCAST_H
+#endif // GEOMETRIC_H

@@ -1,6 +1,8 @@
 #ifndef GEOMETRIC_H
 #define GEOMETRIC_H
+#include <cmath>
 
+using namespace std;
 class Point {
     public:
         float x = 0;
@@ -13,8 +15,17 @@ class Point {
             this->z = z1;
         }
 };
+class SphericalPoint: public Point {
+    public:
+        SphericalPoint(float z_rotation, float xy_rotation, float focal_length)
+        : Point(0, 0, 0) {
+            this->x = focal_length * cos(xy_rotation) * sin(z_rotation);
+            this->y = focal_length * sin(xy_rotation) * sin(z_rotation);
+            this->z = focal_length * cos(xy_rotation);
+        }
+};
 
-class Plane {
+class Plane{
     public:
         float a = 0;
         float b = 0;
@@ -26,6 +37,13 @@ class Plane {
             this->b = b;
             this->c = c;
             this->d = d;
+        }
+};
+class Plane_normalVec_point : public Plane {
+    public:
+        Plane_normalVec_point(const Point &point, const Point &normal)
+        :Plane(normal.x, normal.y, normal.z, -(normal.x * point.x + normal.y * point.y + normal.z * point.z)) {
+                
         }
 };
 
@@ -47,5 +65,7 @@ class Line {
             this->z_0 = p1.z;
         }
 };
+
+
 
 #endif // GEOMETRIC_H
