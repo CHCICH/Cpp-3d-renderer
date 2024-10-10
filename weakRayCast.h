@@ -24,12 +24,12 @@ class WeakRayCast {
         Point camera_pov,screen_center;
         float z_rotation,xy_rotation,focal_length;
 
-        WeakRayCast(double ID) : camera_pov(0, 0, 0), screen_center(0, 0, 2) {ini
+        WeakRayCast(double ID) : camera_pov(0, 0, 0), screen_center(0, 0, 0){
             this->ID = ID;
         }
 
         // initialzing Setup all the holder and specify the type of data allocation 
-        void _init_(bool typeStates = true, int Epoc, string background_color = "black", string point_color = "white", Point camera, float focal_length=0, float xy_rotation=PI/4, float z_rotation=PI/2){
+        void _init_(bool typeStates = true, int Epoc = 60, string background_color = "black", string point_color = "white", Point camera = Point(0,0,0), float focal_length=0, float xy_rotation=PI/4, float z_rotation=PI/2){
             if(typeStates == true){
                 this->data_point = {};
                 this->isStatic = true;
@@ -86,21 +86,15 @@ class WeakRayCast {
         }
 
         // after initialazation we need to start computing things
-        void Render(vector<Point> &data_set){ 
-            // Point 3d_projection_point = this->intersection_Plane_Line();
-        }
-        Point intersection_Plane_Line(Plane p, Line l){
-            float denominator = p.a * l.a + p.b * l.b + p.c * l.c;
-            if (denominator == 0) {
-                throw runtime_error("The line is parallel to the plane, no intersection.");
+        void Render_3d_image(vector<Point> &data_set){
+            vector<Point> DATA_SET;
+            if(isStatic){
+                DATA_SET = this->data_point;
+            }else{
+                DATA_SET = data_set;
             }
-            float numerator = -(p.a * l.x_0 + p.b * l.y_0 + p.c * l.z_0 + p.d);
-            float t = numerator / denominator;
-            float x = l.x_0 + t * l.a;
-            float y = l.y_0 + t * l.b;
-            float z = l.z_0 + t * l.c;
-            return Point(x, y, z);
         }
+        
 
 };
 
