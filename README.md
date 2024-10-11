@@ -41,3 +41,41 @@ Feel free to explore the code, suggest improvements, and contribute to the proje
 ## Contributing
 
 We welcome contributions from the community. Please fork the repository, create a new branch, and submit a pull request with your changes. Make sure to follow the coding standards and include tests for any new features.
+
+## Features
+
+- **Optimized Raycasting**: Renders rays for each vertex instead of each pixel, improving performance.
+- **Cross-Platform**: Compatible with multiple operating systems including Windows, macOS, and Linux.
+- **Easy Integration**: Simple API for integrating the renderer into your existing projects.
+- **Open Source**: Contributions are welcome to enhance the functionality and performance.
+
+## Requirements
+
+- **C++ Compiler**: Ensure you have a modern C++ compiler installed (e.g., GCC, Clang, MSVC).
+- **CMake**: Required for building the project.
+- **OpenGL**: Used for rendering the 3D objects.
+
+## Getting Started
+
+To get started with WeakRayCasting, follow the steps in the "How to Use the Library" section. Additionally, you can refer to the examples provided in the `examples` directory of the repository to see how to integrate and use the renderer in different scenarios.
+
+## License
+
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
+
+
+## License
+
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
+
+## Contact
+
+For any questions or support, feel free to open an issue on GitHub or contact the maintainers directly.
+## Dependencies
+
+This project uses the following libraries:
+
+- **OpenGL**: Used for rendering the 3D objects.
+- **SDL**: Simple DirectMedia Layer is used for handling window creation and input.
+
+Make sure to have these dependencies installed on your system before building the project.
