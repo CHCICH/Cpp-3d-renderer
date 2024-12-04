@@ -117,18 +117,21 @@ Point cross_Product_3D_vector(const Point &vect1,const Point &vect2){
 
 Point2D retranspose_3D_system_into_2D(const Point &I, const Point &J, const Point &P,const Point &O) {
     float a,b;
-    if((J.x-O.x != 0 || I.x-O.x != 0 ) &&  (J.y-O.y != 0 || I.y-O.y != 0 )){
-        if(J.x-O.x == 0){
-            a = (P.x - O.x)/(I.x - P.x);
-            // b = 
-        }else{
-            a = (P.y - O.y - (P.x - O.x) * (J.y - O.y) / (J.x - O.x)) / ((I.y - O.y) - (I.x - O.x) * (J.y - O.y) / (J.x - O.x));
-            b = (P.x - O.x - a * (I.x - O.x)) / (J.x - O.x);
-        }
-    }else if(!(J.y-O.y == 0 && I.y-O.y == 0 )){
-
+    // to solve this kind of problem using a matrix determinant method to solve linear system
+    float detXY = (I.x - O.x)*(J.y - O.y) - (I.y - O.y)*(J.x - O.x);
+    float detXZ = (I.x - O.x)*(J.z - O.z) - (I.z - O.z)*(J.x - O.x);
+    float detZY = (I.y - O.y)*(J.z - O.z) - (I.z - O.z)*(J.y - O.y);
+    if(detXY != 0){
+        a = ((P.x - O.x)*(J.y - O.y) - (J.x - O.x)*(P.y - O.y))/detXY;
+        b = ((I.x - O.x)*(P.y - O.y) - (P.x - O.x)*(I.y - O.y))/detXY;
+    }else if(detXZ != 0){
+        a = ((P.x - O.x)*(J.z - O.z) - (J.x - O.x)*(P.z - O.z))/detXZ;
+        b = ((I.x - O.x)*(P.z - O.z) - (P.x - O.x)*(I.z - O.z))/detXZ;
+    }else if(detZY != 0){
+        a = ((P.y - O.y)*(J.z - O.z) - (J.y - O.y)*(P.z - O.z))/detZY;
+        b = ((I.y - O.y)*(P.z - O.z) - (P.y - O.y)*(I.z - O.z))/detZY;
     }else{
-        throw runtime_error("Invalid transformation: the system cannot be transposed");
+        throw runtime_error("No valid determinant found for transformation. the Equation can't be solved");
     }
     // Return a default Point2D if no transformation logic is added
     return Point2D(a, b);
