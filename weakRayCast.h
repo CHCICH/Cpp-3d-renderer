@@ -1,11 +1,11 @@
-#ifndef WEAKRAYCAST_H
-#define WEAKRAYCAST_H
 #include <vector>
 #include <iostream>
 #include <string>
 #include <memory>
 #include "geometric.h"
 #include <cmath>
+#ifndef WEAKRAYCAST_H
+#define WEAKRAYCAST_H
 // #include <SDL.h>
 using namespace std;
 constexpr double PI = 3.14159265358979323846;
@@ -24,6 +24,7 @@ class WeakRayCast {
         Point camera_pov,screen_center;
         float z_rotation,xy_rotation,focal_length;
 
+        WeakRayCast(): camera_pov(0,0,0),screen_center(0,0,0){};
         WeakRayCast(double ID) : camera_pov(0, 0, 0), screen_center(0, 0, 0){
             this->ID = ID;
         }
@@ -75,7 +76,7 @@ class WeakRayCast {
         }
             
         // how to add multiple points at the same time
-        void add_data_point(vector <Point> newDataSet){
+        void add_data_point(const vector <Point> &newDataSet){
             if(isStatic){
                 for(int i = 0 ; i < newDataSet.size(); i++){
                     this->data_point.push_back(newDataSet[i]); // Use a reference to avoid copying each Point
@@ -86,13 +87,14 @@ class WeakRayCast {
         }
 
         // after initialazation we need to start computing things
-        void Render_3d_image(vector<Point> &data_set){
+        void Render_3d_image(const vector<Point> &data_set){
             vector<Point> DATA_SET;
             if(isStatic){
                 DATA_SET = this->data_point;
             }else{
                 DATA_SET = data_set;
             }
+            
         }
         
 

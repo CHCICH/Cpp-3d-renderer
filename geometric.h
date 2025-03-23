@@ -12,6 +12,16 @@ class Point2D {
             this->x = x1;
             this->y = y1;
         }
+        Point2D operator + (const Point2D & other){
+            return Point2D(this->x+other.x, this->y+other.y);
+        }
+        Point2D operator *(float scalar){
+            return Point2D(this->x * scalar, this->y*scalar );
+        }
+        Point2D operator -(const Point2D & other){
+            return Point2D(this->x-other.x, this->y-other.y);
+
+        }
 };
 class Point {
     public:
@@ -19,6 +29,7 @@ class Point {
         float y = 0;
         float z = 0;
         bool is_3D_vector = false;
+        Point():x(0),y(0),z(0){};
         Point(float x1, float y1, float z1) {
             this->x = x1;
             this->y = y1;
@@ -108,6 +119,7 @@ Point orthogonal_projection(const Point &point,const Plane &plane){
 
 Point unit_vector_transformer(const Point &vect){
     float scalar_vect = sqrt(pow(vect.x,2)+pow(vect.y,2)+pow(vect.z,2));
+    if (scalar_vect == 0) return Point();
     return Point(vect.x/scalar_vect,vect.y/scalar_vect,vect.z/scalar_vect);
 }
 
@@ -136,5 +148,7 @@ Point2D retranspose_3D_system_into_2D(const Point &I, const Point &J, const Poin
     // Return a default Point2D if no transformation logic is added
     return Point2D(a, b);
 }
+
+
 
 #endif // GEOMETRIC_H
